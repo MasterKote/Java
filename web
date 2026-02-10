@@ -9,70 +9,60 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: #f5f5f5;
+            background: white;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
             color: #333;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px;
         }
         
         h1 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #2c3e50;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
         
         .description {
             text-align: center;
-            margin-bottom: 20px;
-            line-height: 1.5;
+            margin-bottom: 15px;
+            line-height: 1.4;
             color: #555;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
         }
         
         .controls {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
             justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
         }
         
         .button {
             background: #3498db;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.2s;
+            font-size: 0.9rem;
         }
         
         .button:hover {
             background: #2980b9;
         }
         
-        .button:active {
-            transform: translateY(1px);
-        }
-        
         .button:disabled {
-            background: #95a5a6;
+            background: #bdc3c7;
             cursor: not-allowed;
         }
         
@@ -84,38 +74,32 @@
             background: #c0392b;
         }
         
-        .button.animate {
-            background: #2ecc71;
-        }
-        
-        .button.animate:hover {
-            background: #27ae60;
-        }
-        
         .coordinates-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            justify-content: center;
         }
         
         .coordinate-box {
-            background-color: #f8f9fa;
-            border-radius: 6px;
-            padding: 15px;
+            background: #f8f9fa;
             border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            min-width: 180px;
         }
         
         .coordinate-box h3 {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #2c3e50;
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-align: center;
         }
         
         .coordinate {
-            margin-bottom: 5px;
-            font-size: 0.95rem;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
         }
         
         .coordinate span {
@@ -125,144 +109,135 @@
         
         #animation-area {
             width: 100%;
-            height: 400px;
-            background-color: #f8f9fa;
-            border-radius: 6px;
+            height: 350px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             position: relative;
             overflow: hidden;
-            border: 1px solid #ddd;
-            margin-bottom: 20px;
-            cursor: crosshair;
+            margin-bottom: 15px;
         }
         
         #animated-object {
             position: absolute;
-            width: 30px;
-            height: 30px;
+            width: 24px;
+            height: 24px;
             background: #e74c3c;
             border-radius: 50%;
             transform: translate(-50%, -50%);
             transition: left 0.05s linear, top 0.05s linear;
             z-index: 10;
             border: 2px solid white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
         
         .point {
             position: absolute;
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             transform: translate(-50%, -50%);
             z-index: 5;
+            border: 2px solid white;
         }
         
         .start-point {
-            background-color: #3498db;
-            border: 2px solid white;
+            background: #3498db;
         }
         
         .end-point {
-            background-color: #2ecc71;
-            border: 2px solid white;
+            background: #2ecc71;
         }
         
         .point-label {
             position: absolute;
             color: #2c3e50;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: bold;
             transform: translate(-50%, -50%);
-            margin-top: 10px;
-            white-space: nowrap;
-            background: rgba(255,255,255,0.8);
-            padding: 2px 6px;
-            border-radius: 3px;
+            margin-top: 8px;
+            background: rgba(255,255,255,0.9);
+            padding: 1px 4px;
+            border-radius: 2px;
+            border: 1px solid #ddd;
         }
         
         #line {
             position: absolute;
             height: 2px;
-            background-color: rgba(52, 152, 219, 0.5);
+            background: rgba(52, 152, 219, 0.7);
             transform-origin: 0 0;
             z-index: 1;
         }
         
         .status {
             text-align: center;
-            margin-top: 15px;
-            padding: 12px;
-            background-color: #ecf0f1;
-            border-radius: 6px;
-            font-size: 1rem;
+            padding: 10px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            font-size: 0.9rem;
             color: #2c3e50;
-            font-weight: bold;
-            min-height: 50px;
+            margin-bottom: 15px;
+            min-height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 15px;
         }
         
         .instructions {
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 6px;
-            border-left: 4px solid #3498db;
-            font-size: 0.9rem;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 3px solid #3498db;
+            font-size: 0.85rem;
         }
         
         .instructions h3 {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #2c3e50;
         }
         
         .instructions ol {
-            margin-left: 20px;
-            line-height: 1.5;
+            margin-left: 18px;
+            line-height: 1.4;
         }
         
         .instructions li {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 600px) {
             .container {
-                padding: 15px;
+                padding: 10px;
             }
             
             #animation-area {
-                height: 300px;
+                height: 280px;
             }
             
             .coordinates-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .controls {
                 flex-direction: column;
                 align-items: center;
             }
             
-            .button {
+            .coordinate-box {
                 width: 100%;
-                max-width: 300px;
+                max-width: 280px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>ПР10: Анимация перемещения объекта по прямой</h1>
+        <h1>Анимация перемещения объекта по прямой</h1>
         
         <div class="description">
-            <p>Анимируйте объект, перемещая его из начальной точки в конечную точку по прямой линии.</p>
+            <p>Кликните в области ниже, чтобы выбрать начальную и конечную точки, затем запустите анимацию</p>
         </div>
         
         <div class="controls">
-            <button id="startBtn" class="button">Выбрать начальную точку</button>
+            <button id="animateBtn" class="button" disabled>Запустить анимацию</button>
             <button id="resetBtn" class="button reset">Сбросить</button>
-            <button id="animateBtn" class="button animate" disabled>Запустить анимацию</button>
         </div>
         
         <div class="coordinates-container">
@@ -273,13 +248,13 @@
             </div>
             
             <div class="coordinate-box">
-                <h3>Начальная точка (x1; y1)</h3>
+                <h3>Начальная точка</h3>
                 <div class="coordinate">X: <span id="startX">не выбрано</span></div>
                 <div class="coordinate">Y: <span id="startY">не выбрано</span></div>
             </div>
             
             <div class="coordinate-box">
-                <h3>Конечная точка (x2; y2)</h3>
+                <h3>Конечная точка</h3>
                 <div class="coordinate">X: <span id="endX">не выбрано</span></div>
                 <div class="coordinate">Y: <span id="endY">не выбрано</span></div>
             </div>
@@ -294,11 +269,11 @@
         </div>
         
         <div class="instructions">
-            <h3>Инструкция:</h3>
+            <h3>Как использовать:</h3>
             <ol>
-                <li>Кликните в области анимации, чтобы выбрать начальную точку (x1; y1)</li>
-                <li>Кликните второй раз, чтобы выбрать конечную точку (x2; y2)</li>
-                <li>Нажмите "Запустить анимацию" для движения объекта по прямой</li>
+                <li>Первый клик - выбирает начальную точку</li>
+                <li>Второй клик - выбирает конечную точку</li>
+                <li>Нажмите "Запустить анимацию" для движения</li>
                 <li>Используйте "Сбросить" для начала заново</li>
             </ol>
         </div>
@@ -314,9 +289,8 @@
         const startYElement = document.getElementById('startY');
         const endXElement = document.getElementById('endX');
         const endYElement = document.getElementById('endY');
-        const startBtn = document.getElementById('startBtn');
-        const resetBtn = document.getElementById('resetBtn');
         const animateBtn = document.getElementById('animateBtn');
+        const resetBtn = document.getElementById('resetBtn');
         const statusElement = document.getElementById('status');
         
         // Переменные состояния
@@ -339,9 +313,8 @@
             // Добавление обработчиков событий
             window.addEventListener('mousemove', handleMouseMove);
             animationArea.addEventListener('click', handleAreaClick);
-            startBtn.addEventListener('click', handleStartClick);
-            resetBtn.addEventListener('click', resetPoints);
             animateBtn.addEventListener('click', startAnimation);
+            resetBtn.addEventListener('click', resetPoints);
             
             updateStatus();
         }
@@ -352,7 +325,6 @@
             const mouseX = event.clientX - rect.left;
             const mouseY = event.clientY - rect.top;
             
-            // Проверяем, находится ли курсор в области анимации
             if (mouseX >= 0 && mouseX <= rect.width && mouseY >= 0 && mouseY <= rect.height) {
                 mouseXElement.textContent = Math.round(mouseX);
                 mouseYElement.textContent = Math.round(mouseY);
@@ -367,10 +339,11 @@
             const x = event.clientX - rect.left;
             const y = event.clientY - rect.top;
             
-            // Очищаем старые точки и линию перед созданием новых
+            // Очищаем старые точки и линию
             clearPointsAndLine();
             
             if (selectingStartPoint) {
+                // Выбираем начальную точку
                 startPoint = { x, y };
                 startXElement.textContent = Math.round(x);
                 startYElement.textContent = Math.round(y);
@@ -379,8 +352,9 @@
                 
                 selectingStartPoint = false;
                 statusElement.textContent = 'Начальная точка выбрана. Кликните для выбора конечной точки.';
-                animateBtn.disabled = true; // Не позволяем запускать анимацию с одной точкой
+                animateBtn.disabled = true;
             } else {
+                // Выбираем конечную точку
                 endPoint = { x, y };
                 endXElement.textContent = Math.round(x);
                 endYElement.textContent = Math.round(y);
@@ -392,27 +366,8 @@
                 
                 selectingStartPoint = true;
                 statusElement.textContent = 'Обе точки выбраны. Нажмите "Запустить анимацию".';
-                animateBtn.disabled = false; // Разрешаем запуск анимации только при двух точках
+                animateBtn.disabled = false;
             }
-        }
-        
-        // Обработчик кнопки выбора начальной точки
-        function handleStartClick() {
-            if (isAnimating) return;
-            
-            selectingStartPoint = true;
-            startPoint = null;
-            endPoint = null;
-            
-            clearPointsAndLine();
-            
-            startXElement.textContent = 'не выбрано';
-            startYElement.textContent = 'не выбрано';
-            endXElement.textContent = 'не выбрано';
-            endYElement.textContent = 'не выбрано';
-            
-            animateBtn.disabled = true;
-            statusElement.textContent = 'Кликните в области анимации, чтобы выбрать начальную точку';
         }
         
         // Создание визуальной точки
@@ -422,7 +377,6 @@
             point.classList.add('point', className);
             point.style.left = `${x}px`;
             point.style.top = `${y}px`;
-            point.dataset.type = className;
             animationArea.appendChild(point);
             
             // Создаем подпись
@@ -496,7 +450,6 @@
         
         // Запуск анимации
         function startAnimation() {
-            // Проверяем, что обе точки выбраны
             if (!startPoint || !endPoint || isAnimating) return;
             
             isAnimating = true;
@@ -507,7 +460,6 @@
             animatedObject.style.top = `${startPoint.y}px`;
             
             // Отключаем кнопки во время анимации
-            startBtn.disabled = true;
             animateBtn.disabled = true;
             resetBtn.disabled = true;
             
@@ -525,3 +477,49 @@
                 const newX = startPoint.x + dx * step;
                 const newY = startPoint.y + dy * step;
                 
+                // Устанавливаем новую позицию объекта
+                animatedObject.style.left = `${newX}px`;
+                animatedObject.style.top = `${newY}px`;
+                
+                // Проверяем, достигли ли конечной точки
+                if (step >= totalSteps) {
+                    stopAnimation();
+                    animatedObject.style.left = `${endPoint.x}px`;
+                    animatedObject.style.top = `${endPoint.y}px`;
+                    statusElement.textContent = 'Анимация завершена!';
+                }
+            }, 20);
+        }
+        
+        // Остановка анимации
+        function stopAnimation() {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+            }
+            
+            isAnimating = false;
+            
+            // Включаем кнопки
+            animateBtn.disabled = false;
+            resetBtn.disabled = false;
+        }
+        
+        // Обновление статуса
+        function updateStatus() {
+            if (isAnimating) {
+                statusElement.textContent = 'Анимация выполняется...';
+            } else if (!startPoint) {
+                statusElement.textContent = 'Кликните в области анимации, чтобы выбрать начальную точку';
+            } else if (!endPoint) {
+                statusElement.textContent = 'Начальная точка выбрана. Кликните для выбора конечной точки.';
+            } else {
+                statusElement.textContent = 'Обе точки выбраны. Нажмите "Запустить анимацию".';
+            }
+        }
+        
+        // Инициализация при загрузке страницы
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
