@@ -523,3 +523,222 @@
     </script>
 </body>
 </html>
+
+______________
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>ПР10: Анимация</title>
+    <style>
+        body { margin: 20px; font-family: Arial; background: #f0f0f0; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 15px; border-radius: 5px; }
+        h1 { text-align: center; margin-bottom: 10px; color: #333; }
+        .desc { text-align: center; margin-bottom: 15px; color: #666; }
+        .controls { text-align: center; margin-bottom: 15px; }
+        button { padding: 8px 15px; margin: 0 5px; background: #3498db; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:disabled { background: #ccc; cursor: default; }
+        .reset { background: #e74c3c; }
+        .coords { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .coord-box { flex: 1; margin: 0 5px; padding: 10px; background: #f8f8f8; border: 1px solid #ddd; border-radius: 3px; }
+        .coord-box h3 { margin: 0 0 8px 0; font-size: 14px; color: #555; }
+        #area { width: 100%; height: 300px; background: #f8f8f8; border: 1px solid #ddd; position: relative; margin-bottom: 15px; }
+        #obj { position: absolute; width: 20px; height: 20px; background: #e74c3c; border-radius: 50%; transform: translate(-50%, -50%); }
+        .point { position: absolute; width: 8px; height: 8px; border-radius: 50%; transform: translate(-50%, -50%); }
+        .start { background: #3498db; }
+        .end { background: #2ecc71; }
+        #line { position: absolute; height: 2px; background: rgba(52, 152, 219, 0.5); transform-origin: 0 0; }
+        #status { text-align: center; padding: 10px; background: #ecf0f1; border-radius: 3px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Анимация перемещения объекта</h1>
+        <p class="desc">Кликните в области ниже чтобы выбрать точки, затем запустите анимацию</p>
+        
+        <div class="controls">
+            <button id="animateBtn" disabled>Запустить анимацию</button>
+            <button id="resetBtn" class="reset">Сбросить</button>
+        </div>
+        
+        <div class="coords">
+            <div class="coord-box">
+                <h3>Координаты курсора</h3>
+                <div>X: <span id="mouseX">0</span></div>
+                <div>Y: <span id="mouseY">0</span></div>
+            </div>
+            <div class="coord-box">
+                <h3>Начальная точка</h3>
+                <div>X: <span id="startX">-</span></div>
+                <div>Y: <span id="startY">-</span></div>
+            </div>
+            <div class="coord-box">
+                <h3>Конечная точка</h3>
+                <div>X: <span id="endX">-</span></div>
+                <div>Y: <span id="endY">-</span></div>
+            </div>
+        </div>
+        
+        <div id="area">
+            <div id="obj"></div>
+        </div>
+        
+        <div id="status">Кликните в области выше чтобы выбрать начальную точку</div>
+    </div>
+
+    <script>
+        const area = document.getElementById('area');
+        const obj = document.getElementById('obj');
+        const mouseX = document.getElementById('mouseX');
+        const mouseY = document.getElementById('mouseY');
+        const startX = document.getElementById('startX');
+        const startY = document.getElementById('startY');
+        const endX = document.getElementById('endX');
+        const endY = document.getElementById('endY');
+        const animateBtn = document.getElementById('animateBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const status = document.getElementById('status');
+        
+        let start = null;
+        let end = null;
+        let interval = null;
+        let animating = false;
+        let step = 0;
+        const steps = 100;
+        let needStart = true;
+        
+        function init() {
+            const centerX = area.offsetWidth / 2;
+            const centerY = area.offsetHeight / 2;
+            obj.style.left = centerX + 'px';
+            obj.style.top = centerY + 'px';
+            
+            window.addEventListener('mousemove', e => {
+                const rect = area.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+                    mouseX.textContent = Math.round(x);
+                    mouseY.textContent = Math.round(y);
+                }
+            });
+            
+            area.addEventListener('click', e => {
+                if (animating) return;
+                
+                const rect = area.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                document.querySelectorAll('.point, #line').forEach(el => el.remove());
+                
+                if (needStart) {
+                    start = {x, y};
+                    startX.textContent = Math.round(x);
+                    startY.textContent = Math.round(y);
+                    
+                    const p = document.createElement('div');
+                    p.className = 'point start';
+                    p.style.left = x + 'px';
+                    p.style.top = y + 'px';
+                    area.appendChild(p);
+                    
+                    needStart = false;
+                    status.textContent = 'Начальная точка выбрана. Кликните для конечной точки.';
+                    animateBtn.disabled = true;
+                } else {
+                    end = {x, y};
+                    endX.textContent = Math.round(x);
+                    endY.textContent = Math.round(y);
+                    
+                    const p = document.createElement('div');
+                    p.className = 'point end';
+                    p.style.left = x + 'px';
+                    p.style.top = y + 'px';
+                    area.appendChild(p);
+                    
+                    const dx = end.x - start.x;
+                    const dy = end.y - start.y;
+                    const length = Math.sqrt(dx * dx + dy * dy);
+                    const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                    
+                    const line = document.createElement('div');
+                    line.id = 'line';
+                    line.style.left = start.x + 'px';
+                    line.style.top = start.y + 'px';
+                    line.style.width = length + 'px';
+                    line.style.transform = `rotate(${angle}deg)`;
+                    area.appendChild(line);
+                    
+                    needStart = true;
+                    status.textContent = 'Обе точки выбраны. Нажмите "Запустить анимацию".';
+                    animateBtn.disabled = false;
+                }
+            });
+            
+            animateBtn.addEventListener('click', () => {
+                if (!start || !end || animating) return;
+                
+                animating = true;
+                step = 0;
+                obj.style.left = start.x + 'px';
+                obj.style.top = start.y + 'px';
+                
+                animateBtn.disabled = true;
+                resetBtn.disabled = true;
+                
+                const dx = (end.x - start.x) / steps;
+                const dy = (end.y - start.y) / steps;
+                
+                status.textContent = 'Анимация выполняется...';
+                
+                interval = setInterval(() => {
+                    step++;
+                    const newX = start.x + dx * step;
+                    const newY = start.y + dy * step;
+                    obj.style.left = newX + 'px';
+                    obj.style.top = newY + 'px';
+                    
+                    if (step >= steps) {
+                        clearInterval(interval);
+                        animating = false;
+                        obj.style.left = end.x + 'px';
+                        obj.style.top = end.y + 'px';
+                        status.textContent = 'Анимация завершена!';
+                        animateBtn.disabled = false;
+                        resetBtn.disabled = false;
+                    }
+                }, 20);
+            });
+            
+            resetBtn.addEventListener('click', () => {
+                if (interval) clearInterval(interval);
+                animating = false;
+                start = null;
+                end = null;
+                needStart = true;
+                
+                startX.textContent = '-';
+                startY.textContent = '-';
+                endX.textContent = '-';
+                endY.textContent = '-';
+                
+                animateBtn.disabled = true;
+                resetBtn.disabled = false;
+                
+                document.querySelectorAll('.point, #line').forEach(el => el.remove());
+                
+                const centerX = area.offsetWidth / 2;
+                const centerY = area.offsetHeight / 2;
+                obj.style.left = centerX + 'px';
+                obj.style.top = centerY + 'px';
+                
+                status.textContent = 'Кликните в области чтобы выбрать начальную точку';
+            });
+        }
+        
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
