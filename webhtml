@@ -1,1 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конструктор пиццы</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-inner">
+            <a href="#" class="logo">PizzaBuilder</a>
+            <nav class="nav-menu">
+                <a href="#about">О нас</a>
+                <a href="#constructor">Конструктор</a>
+                <a href="#contacts">Контакты</a>
+            </nav>
+        </div>
+    </header>
 
+    <section id="about" class="hero">
+        <div class="container">
+            <h1>Собери свою идеальную пиццу</h1>
+            <p>Выбери ингредиенты и получи свою уникальную комбинацию</p>
+        </div>
+    </section>
+
+    <section id="constructor" class="container">
+        <div class="constructor-grid">
+            <div>
+                <div class="pizza-visual">
+                    <div class="pizza-base">
+                        <div id="toppingLayer"></div>
+                    </div>
+                </div>
+
+                <div class="ingredients-panel" id="ingredientsPanel"></div>
+            </div>
+
+            <div class="cart">
+                <h3>Ваш заказ</h3>
+                <ul id="selectedList"></ul>
+                <div class="total">
+                    <span>Итого:</span>
+                    <span id="totalPrice">0 ₽</span>
+                </div>
+                <div class="cart-buttons">
+                    <button class="btn btn-order" id="orderBtn">Заказать</button>
+                    <button class="btn btn-clear" id="clearBtn">Очистить</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contacts">
+        <div class="container">
+            <p>PizzaBuilder — конструктор пиццы</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
