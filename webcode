@@ -1,16 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PizzaBuilder | Конструктор пиццы</title>
+    <title>Конструктор пиццы</title>
     <style>
-        /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            font-family: system-ui, Arial, sans-serif;
         }
 
         html {
@@ -18,384 +18,279 @@
         }
 
         body {
-            background-color: #faf7f2;
-            color: #2d2a24;
-            line-height: 1.5;
+            background: #fff;
+            color: #222;
         }
 
-        /* ===== АДАПТИВНЫЙ КОНТЕЙНЕР ===== */
         .container {
-            max-width: 1920px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
         }
 
-        /* ===== ШАПКА ===== */
+        /* Шапка */
         header {
-            background-color: #ffffffd9;
-            backdrop-filter: blur(8px);
+            background: #fff;
+            border-bottom: 1px solid #ddd;
             position: sticky;
             top: 0;
-            z-index: 10;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-            border-bottom: 1px solid #f0e4d5;
         }
 
         .header-inner {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            min-height: 80px;
+            height: 70px;
         }
 
         .logo {
-            font-weight: 700;
-            font-size: 1.8rem;
-            letter-spacing: -0.5px;
-            color: #c95a2b;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #d35400;
             text-decoration: none;
         }
 
         .nav-menu {
             display: flex;
-            gap: 48px;
+            gap: 30px;
         }
 
         .nav-menu a {
             text-decoration: none;
-            font-weight: 500;
-            color: #3e3a34;
-            font-size: 1.1rem;
-            transition: color 0.2s;
+            color: #333;
         }
 
-        .nav-menu a:hover {
-            color: #c95a2b;
-        }
-
-        /* ===== HERO ===== */
+        /* Hero */
         .hero {
-            padding: 60px 0 40px;
             text-align: center;
-            background: linear-gradient(145deg, #fffbf5 0%, #fcf3e9 100%);
-            border-radius: 0 0 48px 48px;
+            padding: 60px 0;
+            background: #f9f9f9;
         }
 
         .hero h1 {
-            font-size: 3.2rem;
-            font-weight: 700;
-            letter-spacing: -1px;
-            color: #2d2a24;
-            margin-bottom: 16px;
+            font-size: 2rem;
+            margin-bottom: 10px;
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            color: #6b5f53;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* ===== ОСНОВНОЙ БЛОК КОНСТРУКТОРА ===== */
-        .constructor-section {
-            padding: 60px 0 80px;
-        }
-
+        /* Конструктор */
         .constructor-grid {
             display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 40px;
-            align-items: start;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            padding: 40px 0;
         }
 
-        /* левая часть: пицца + ингредиенты */
-        .pizza-column {
-            display: flex;
-            flex-direction: column;
-            gap: 48px;
-        }
-
-        /* Визуализатор пиццы */
+        /* Пицца */
         .pizza-visual {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #e7d9cc;
-            border-radius: 48px;
-            padding: 40px 20px;
-            box-shadow: inset 0 8px 12px rgba(0,0,0,0.05), 0 20px 30px -10px rgba(0,0,0,0.2);
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #eee;
+            margin-bottom: 30px;
         }
 
         .pizza-base {
             position: relative;
-            width: 320px;
-            height: 320px;
-            background-color: #f3dbb6;
-            background-image: radial-gradient(circle at 30% 30%, #f8e9cf 5%, #e2b87a 80%);
+            width: 300px;
+            height: 300px;
+            background: #f7d9aa;
             border-radius: 50%;
-            box-shadow: 0 20px 25px -8px #a18463, 0 0 0 12px #d6b185, 0 0 0 14px #b38b5e;
-            transition: transform 0.2s;
+            border: 8px solid #e6b87e;
+            margin: 0 auto;
+            overflow: hidden;
         }
 
-        .pizza-base:hover {
-            transform: scale(1.01);
-        }
-
-        .ingredient-layer {
+        #toppingLayer {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            pointer-events: none;
         }
 
         .topping {
             position: absolute;
-            width: 40px;
-            height: 40px;
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
-            transition: all 0.2s ease;
-            animation: pop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes pop {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .topping.sauce {
+            background: #b3470c;
+            width: 100%;
+            height: 100%;
+            top: 50%;
+            left: 50%;
+            opacity: 0.3;
         }
 
-        /* цвета ингредиентов */
-        .topping.cheese { background: #fde581; border: 2px solid #e3b43c; width: 38px; height: 38px; }
-        .topping.pepperoni { background: #c04040; border: 2px solid #912b2b; width: 32px; height: 32px; }
-        .topping.mushrooms { background: #9c7c5b; border: 2px solid #6b4f36; width: 28px; height: 28px; border-radius: 45% 55% 50% 50% / 60% 45% 55% 40%; }
-        .topping.peppers { background: #4b9e4b; border: 2px solid #2a6b2a; width: 30px; height: 30px; clip-path: polygon(50% 0%, 80% 30%, 100% 60%, 70% 100%, 30% 100%, 0% 60%, 20% 30%); }
-        .topping.sauce { background: #b3470c; width: 100%; height: 100%; top: 0; left: 0; opacity: 0.25; border-radius: 50%; border: none; filter: blur(6px); }
+        .topping.cheese { background: #ffd966; width: 35px; height: 35px; border: 2px solid #e6b422; }
+        .topping.pepperoni { background: #b33c3c; width: 32px; height: 32px; border: 2px solid #8b2c2c; }
+        .topping.mushrooms { background: #a17a5c; width: 28px; height: 28px; border: 2px solid #6b4f36; }
+        .topping.peppers { background: #5f9e5f; width: 30px; height: 30px; border: 2px solid #2d6b2d; }
 
-        /* Панель ингредиентов */
+        /* Ингредиенты */
         .ingredients-panel {
-            background: #fff9f2;
-            border-radius: 32px;
-            padding: 28px 24px;
-            box-shadow: 0 20px 35px -8px rgba(86, 61, 43, 0.15);
-            border: 1px solid #f0ddd0;
-        }
-
-        .ingredients-panel h3 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            color: #3a2e25;
-        }
-
-        .ingredient-list {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
         }
 
         .ingredient-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: white;
-            padding: 10px 18px;
-            border-radius: 60px;
-            border: 1px solid #eddccf;
-            transition: all 0.2s;
-        }
-
-        .ingredient-item:hover {
-            border-color: #c95a2b;
-            box-shadow: 0 4px 10px rgba(201, 90, 43, 0.1);
-            transform: translateY(-2px);
+            padding: 10px;
+            border-bottom: 1px solid #f0f0f0;
         }
 
         .ingredient-info {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 10px;
         }
 
-        .ingredient-dot {
-            width: 28px;
-            height: 28px;
+        .dot {
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
         }
-        .dot-cheese { background: #fde581; border: 2px solid #e3b43c; }
-        .dot-pepperoni { background: #c04040; border: 2px solid #912b2b; }
-        .dot-mushrooms { background: #9c7c5b; border: 2px solid #6b4f36; }
-        .dot-peppers { background: #4b9e4b; border: 2px solid #2a6b2a; }
-        .dot-sauce { background: #b3470c; opacity: 0.7; }
 
-        .ingredient-name {
+        .dot.sauce { background: #b3470c; opacity: 0.7; }
+        .dot.cheese { background: #ffd966; border: 2px solid #e6b422; }
+        .dot.pepperoni { background: #b33c3c; border: 2px solid #8b2c2c; }
+        .dot.mushrooms { background: #a17a5c; border: 2px solid #6b4f36; }
+        .dot.peppers { background: #5f9e5f; border: 2px solid #2d6b2d; }
+
+        .price {
+            color: #d35400;
             font-weight: 600;
-            font-size: 1.1rem;
-            min-width: 90px;
+            margin-left: 10px;
         }
 
-        .ingredient-price {
-            color: #c95a2b;
-            font-weight: 600;
-        }
-
-        .counter-control {
+        .counter {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 10px;
         }
 
-        .counter-badge {
-            font-weight: 700;
-            font-size: 1.2rem;
-            min-width: 24px;
+        .counter span {
+            min-width: 20px;
             text-align: center;
+            font-weight: 600;
         }
 
         .add-btn {
-            background: #c95a2b;
+            background: #d35400;
             color: white;
             border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            font-size: 1.8rem;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: 0.15s;
-            box-shadow: 0 8px 14px -6px #c95a2b80;
-        }
-
-        .add-btn:hover:not(:disabled) {
-            background: #b04820;
-            transform: scale(1.07);
         }
 
         .add-btn:disabled {
-            background: #bbb4ac;
-            box-shadow: none;
+            background: #ccc;
             cursor: not-allowed;
-            opacity: 0.5;
         }
 
-        /* ===== БЛОК ИТОГА (КОРЗИНА) ===== */
-        .order-summary {
-            background: #ffffff;
-            border-radius: 32px;
-            padding: 30px 25px;
-            box-shadow: 0 25px 40px -18px #5f4e3e;
-            border: 1px solid #e9d9cb;
+        /* Корзина */
+        .cart {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
             position: sticky;
-            top: 100px;
+            top: 90px;
         }
 
-        .order-summary h3 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 25px;
-            border-bottom: 2px dashed #d9c2b2;
-            padding-bottom: 15px;
+        .cart h3 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
         }
 
-        .selected-list {
+        #selectedList {
             list-style: none;
-            margin-bottom: 30px;
-            min-height: 140px;
+            margin-bottom: 20px;
+            min-height: 150px;
         }
 
-        .selected-list li {
+        #selectedList li {
             display: flex;
             justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0e0d5;
-            font-size: 1.1rem;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
         }
 
-        .total-row {
+        .total {
             display: flex;
             justify-content: space-between;
-            font-weight: 700;
-            font-size: 1.6rem;
-            color: #1f1b16;
+            font-weight: bold;
+            font-size: 1.2rem;
             margin: 20px 0;
-            padding-top: 15px;
-            border-top: 3px solid #c95a2b;
+            padding-top: 10px;
+            border-top: 2px solid #d35400;
         }
 
-        .order-actions {
+        .cart-buttons {
             display: flex;
-            gap: 15px;
+            gap: 10px;
         }
 
         .btn {
             flex: 1;
-            padding: 16px 0;
+            padding: 10px;
             border: none;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1.2rem;
+            border-radius: 4px;
+            font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
         }
 
         .btn-order {
-            background: #c95a2b;
+            background: #d35400;
             color: white;
-            box-shadow: 0 10px 15px -7px #c95a2b;
-        }
-
-        .btn-order:hover {
-            background: #b04820;
-            transform: translateY(-2px);
         }
 
         .btn-clear {
-            background: #f0e4dc;
-            color: #4b3f36;
-        }
-
-        .btn-clear:hover {
-            background: #e1d2c7;
+            background: #e0e0e0;
         }
 
         footer {
-            background: #2d2a24;
-            color: #d9cbbc;
-            padding: 25px 0;
+            background: #333;
+            color: white;
+            padding: 30px 0;
             text-align: center;
-            border-radius: 32px 32px 0 0;
+            margin-top: 40px;
         }
 
-        /* ===== АДАПТАЦИЯ ===== */
         @media (max-width: 768px) {
-            .container { padding: 0 24px; }
-            .header-inner { flex-direction: column; gap: 15px; padding: 15px 0; }
-            .nav-menu { gap: 30px; }
-            .hero h1 { font-size: 2.4rem; }
-            .constructor-grid { grid-template-columns: 1fr; }
-            .order-summary { position: static; }
-            .pizza-base { width: 280px; height: 280px; }
+            .constructor-grid {
+                grid-template-columns: 1fr;
+            }
+            .cart {
+                position: static;
+            }
+            .pizza-base {
+                width: 250px;
+                height: 250px;
+            }
         }
 
         @media (max-width: 320px) {
-            .container { padding: 0 15px; }
-            .nav-menu { gap: 15px; flex-wrap: wrap; justify-content: center; }
-            .hero h1 { font-size: 1.8rem; }
-            .ingredient-item { flex-wrap: wrap; gap: 10px; }
-            .counter-control { margin-left: auto; }
-            .pizza-base { width: 240px; height: 240px; }
+            .nav-menu { gap: 15px; }
+            .hero h1 { font-size: 1.5rem; }
+            .pizza-base { width: 200px; height: 200px; }
         }
     </style>
 </head>
 <body>
-    <header id="home">
+    <header>
         <div class="container header-inner">
-            <a href="#" class="logo">🍕 PizzaBuilder</a>
+            <a href="#" class="logo">PizzaBuilder</a>
             <nav class="nav-menu">
                 <a href="#about">О нас</a>
                 <a href="#constructor">Конструктор</a>
@@ -404,282 +299,168 @@
         </div>
     </header>
 
-    <main>
-        <!-- блок Hero (About) -->
-        <section id="about" class="hero">
-            <div class="container">
-                <h1>Собери свою идеальную пиццу</h1>
-                <p>Выбери ингредиенты и получи свою уникальную комбинацию</p>
-            </div>
-        </section>
+    <section id="about" class="hero">
+        <div class="container">
+            <h1>Собери свою идеальную пиццу</h1>
+            <p>Выбери ингредиенты и получи свою уникальную комбинацию</p>
+        </div>
+    </section>
 
-        <!-- конструктор -->
-        <section id="constructor" class="constructor-section">
-            <div class="container constructor-grid">
-                <!-- Левая колонка: пицца + ингредиенты -->
-                <div class="pizza-column">
-                    <div class="pizza-visual">
-                        <div class="pizza-base" id="pizzaBase">
-                            <div id="toppingLayer" class="ingredient-layer"></div>
-                        </div>
-                    </div>
-
-                    <div class="ingredients-panel">
-                        <h3>Ингредиенты</h3>
-                        <div class="ingredient-list" id="ingredientList"></div>
+    <section id="constructor" class="container">
+        <div class="constructor-grid">
+            <div>
+                <div class="pizza-visual">
+                    <div class="pizza-base">
+                        <div id="toppingLayer"></div>
                     </div>
                 </div>
 
-                <!-- Правая колонка: итог заказа (корзина) -->
-                <aside class="order-summary">
-                    <h3>Ваш заказ</h3>
-                    <ul class="selected-list" id="selectedList"></ul>
-                    <div class="total-row">
-                        <span>Итого:</span>
-                        <span id="totalPrice">0 ₽</span>
-                    </div>
-                    <div class="order-actions">
-                        <button class="btn btn-order" id="orderBtn">Заказать</button>
-                        <button class="btn btn-clear" id="clearBtn">Очистить</button>
-                    </div>
-                </aside>
+                <div class="ingredients-panel" id="ingredientsPanel"></div>
             </div>
-        </section>
-    </main>
+
+            <div class="cart">
+                <h3>Ваш заказ</h3>
+                <ul id="selectedList"></ul>
+                <div class="total">
+                    <span>Итого:</span>
+                    <span id="totalPrice">0 ₽</span>
+                </div>
+                <div class="cart-buttons">
+                    <button class="btn btn-order" id="orderBtn">Заказать</button>
+                    <button class="btn btn-clear" id="clearBtn">Очистить</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer id="contacts">
         <div class="container">
-            <p>Пиццатех · ул. Итальянская 13 · 8-800-па-па-па</p>
-            <p>© PizzaBuilder, 2025 — собери настроение</p>
+            <p>PizzaBuilder — конструктор пиццы</p>
         </div>
     </footer>
 
     <script>
         (function() {
-            // Данные ингредиентов строго по заданию (минимум 5)
-            const INGREDIENTS = [
-                { id: 'sauce', name: 'Соус', price: 25, colorClass: 'sauce', limit: 3 },
-                { id: 'cheese', name: 'Сыр', price: 30, colorClass: 'cheese', limit: 3 },
-                { id: 'pepperoni', name: 'Пепперони', price: 35, colorClass: 'pepperoni', limit: 3 },
-                { id: 'mushrooms', name: 'Грибы', price: 30, colorClass: 'mushrooms', limit: 3 },
-                { id: 'peppers', name: 'Перец', price: 28, colorClass: 'peppers', limit: 3 }
+            // Данные строго по заданию: 5 ингредиентов
+            const data = [
+                { id: 'sauce', name: 'Соус', price: 25, color: 'sauce' },
+                { id: 'cheese', name: 'Сыр', price: 30, color: 'cheese' },
+                { id: 'pepperoni', name: 'Пепперони', price: 35, color: 'pepperoni' },
+                { id: 'mushrooms', name: 'Грибы', price: 30, color: 'mushrooms' },
+                { id: 'peppers', name: 'Перец', price: 28, color: 'peppers' }
             ];
 
-            // Состояние приложения
-            let counts = {
-                sauce: 0,
-                cheese: 0,
-                pepperoni: 0,
-                mushrooms: 0,
-                peppers: 0
-            };
-
-            // Стоимость
+            // Состояние
+            let counts = { sauce: 0, cheese: 0, pepperoni: 0, mushrooms: 0, peppers: 0 };
             let total = 0;
 
-            // ------ Элементы DOM ------
-            const ingredientListEl = document.getElementById('ingredientList');
-            const selectedListEl = document.getElementById('selectedList');
+            // DOM
+            const panel = document.getElementById('ingredientsPanel');
+            const list = document.getElementById('selectedList');
             const totalSpan = document.getElementById('totalPrice');
-            const toppingLayer = document.getElementById('toppingLayer');
+            const layer = document.getElementById('toppingLayer');
             const orderBtn = document.getElementById('orderBtn');
             const clearBtn = document.getElementById('clearBtn');
 
-            // Генерация позиций ингредиентов (случайные координаты для топпингов)
-            function generateRandomToppings(ingId, countToAdd) {
-                if (countToAdd <= 0) return [];
-                const coords = [];
-                for (let i = 0; i < countToAdd; i++) {
-                    // рандомно по кругу, но не слишком близко к краю (от 15% до 85%)
-                    const r = 25 + Math.random() * 50; // % от радиуса
-                    const angle = Math.random() * 2 * Math.PI;
-                    const percentX = 50 + r * Math.cos(angle);
-                    const percentY = 50 + r * Math.sin(angle);
-                    coords.push({ top: percentY + '%', left: percentX + '%' });
-                }
-                return coords;
+            // Координаты в пределах пиццы
+            function getPos() {
+                const r = 30 + Math.random() * 40;
+                const angle = Math.random() * Math.PI * 2;
+                return {
+                    top: (50 + r * Math.sin(angle) * 0.7) + '%',
+                    left: (50 + r * Math.cos(angle) * 0.7) + '%'
+                };
             }
 
-            // Отрисовка всех топпингов на пицце на основе текущих counts
-            function renderPizzaToppings() {
-                toppingLayer.innerHTML = ''; // очистить
-
-                // соус — особый: полупрозрачный слой (только один если есть)
-                if (counts.sauce > 0) {
-                    const sauceDiv = document.createElement('div');
-                    sauceDiv.className = 'topping sauce';
-                    sauceDiv.style.top = '50%';
-                    sauceDiv.style.left = '50%';
-                    sauceDiv.style.width = '100%';
-                    sauceDiv.style.height = '100%';
-                    sauceDiv.style.transform = 'translate(-50%, -50%)';
-                    toppingLayer.appendChild(sauceDiv);
-                }
-
-                // сыр
-                for (let i = 0; i < counts.cheese; i++) {
+            // Отрисовка топпингов
+            function drawPizza() {
+                layer.innerHTML = '';
+                if (counts.sauce) {
                     const el = document.createElement('div');
-                    el.className = 'topping cheese';
-                    const r = 20 + Math.random() * 50;
-                    const angle = Math.random() * 2 * Math.PI;
-                    el.style.top = (50 + r * Math.sin(angle)) + '%';
-                    el.style.left = (50 + r * Math.cos(angle)) + '%';
-                    toppingLayer.appendChild(el);
+                    el.className = 'topping sauce';
+                    layer.appendChild(el);
                 }
-
-                // пепперони
-                for (let i = 0; i < counts.pepperoni; i++) {
-                    const el = document.createElement('div');
-                    el.className = 'topping pepperoni';
-                    const r = 25 + Math.random() * 45;
-                    const angle = Math.random() * 2 * Math.PI;
-                    el.style.top = (50 + r * Math.sin(angle)) + '%';
-                    el.style.left = (50 + r * Math.cos(angle)) + '%';
-                    toppingLayer.appendChild(el);
-                }
-
-                // грибы
-                for (let i = 0; i < counts.mushrooms; i++) {
-                    const el = document.createElement('div');
-                    el.className = 'topping mushrooms';
-                    const r = 20 + Math.random() * 50;
-                    const angle = Math.random() * 2 * Math.PI;
-                    el.style.top = (50 + r * Math.sin(angle)) + '%';
-                    el.style.left = (50 + r * Math.cos(angle)) + '%';
-                    toppingLayer.appendChild(el);
-                }
-
-                // перец
-                for (let i = 0; i < counts.peppers; i++) {
-                    const el = document.createElement('div');
-                    el.className = 'topping peppers';
-                    const r = 25 + Math.random() * 45;
-                    const angle = Math.random() * 2 * Math.PI;
-                    el.style.top = (50 + r * Math.sin(angle)) + '%';
-                    el.style.left = (50 + r * Math.cos(angle)) + '%';
-                    toppingLayer.appendChild(el);
-                }
+                ['cheese', 'pepperoni', 'mushrooms', 'peppers'].forEach(type => {
+                    for (let i = 0; i < counts[type]; i++) {
+                        const el = document.createElement('div');
+                        el.className = `topping ${type}`;
+                        const pos = getPos();
+                        el.style.top = pos.top;
+                        el.style.left = pos.left;
+                        layer.appendChild(el);
+                    }
+                });
             }
 
-            // Обновить интерфейс: счетчики, список заказа, сумму, кнопки disabled
-            function refreshUI() {
-                // 1. перерисовать список ингредиентов (кнопки, счетчики)
-                renderIngredientPanel();
-
-                // 2. перестроить список заказа
-                updateSelectedList();
-
-                // 3. обновить общую цену
-                totalSpan.textContent = total + ' ₽';
-
-                // 4. визуализация пиццы
-                renderPizzaToppings();
-            }
-
-            // Отрисовка левой панели ингредиентов (актуальные счетчики)
-            function renderIngredientPanel() {
-                let htmlStr = '';
-                INGREDIENTS.forEach(ing => {
+            // Обновление всего UI
+            function refresh() {
+                // Панель ингредиентов
+                let html = '';
+                data.forEach(ing => {
                     const cnt = counts[ing.id];
-                    const disabled = cnt >= ing.limit ? 'disabled' : '';
-                    // точка-цвет
-                    let dotClass = '';
-                    if (ing.id === 'sauce') dotClass = 'dot-sauce';
-                    else if (ing.id === 'cheese') dotClass = 'dot-cheese';
-                    else if (ing.id === 'pepperoni') dotClass = 'dot-pepperoni';
-                    else if (ing.id === 'mushrooms') dotClass = 'dot-mushrooms';
-                    else if (ing.id === 'peppers') dotClass = 'dot-peppers';
-
-                    htmlStr += `
-                        <div class="ingredient-item" data-id="${ing.id}">
+                    html += `
+                        <div class="ingredient-item">
                             <div class="ingredient-info">
-                                <span class="ingredient-dot ${dotClass}"></span>
-                                <span class="ingredient-name">${ing.name}</span>
-                                <span class="ingredient-price">+${ing.price}₽</span>
+                                <span class="dot ${ing.color}"></span>
+                                <span>${ing.name}</span>
+                                <span class="price">${ing.price}₽</span>
                             </div>
-                            <div class="counter-control">
-                                <span class="counter-badge" id="counter-${ing.id}">${cnt}</span>
-                                <button class="add-btn" data-id="${ing.id}" ${disabled}>+</button>
+                            <div class="counter">
+                                <span>${cnt}</span>
+                                <button class="add-btn" data-id="${ing.id}" ${cnt >= 3 ? 'disabled' : ''}>+</button>
                             </div>
                         </div>
                     `;
                 });
-                ingredientListEl.innerHTML = htmlStr;
+                panel.innerHTML = html;
 
-                // навесить обработчики на кнопки +
-                document.querySelectorAll('.add-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const id = e.target.dataset.id;
-                        if (!id) return;
-                        if (counts[id] < INGREDIENTS.find(i => i.id === id).limit) {
-                            // увеличиваем счетчик
-                            counts[id]++;
-                            // находим цену
-                            const price = INGREDIENTS.find(i => i.id === id).price;
-                            total += price;
-                            refreshUI();
-                        }
-                    });
+                // Список заказа
+                let items = '';
+                data.forEach(ing => {
+                    const cnt = counts[ing.id];
+                    if (cnt) items += `<li><span>${ing.name} x${cnt}</span> <span>${ing.price * cnt}₽</span></li>`;
                 });
+                list.innerHTML = items || '<li style="justify-content:center">Нет ингредиентов</li>';
+
+                // Итого
+                totalSpan.textContent = total + ' ₽';
+                
+                // Пицца
+                drawPizza();
             }
 
-            // Обновить блок итогового списка (мульти-записи x2, x3)
-            function updateSelectedList() {
-                let items = [];
-                INGREDIENTS.forEach(ing => {
-                    const cnt = counts[ing.id];
-                    if (cnt > 0) {
-                        const totalPrice = ing.price * cnt;
-                        items.push(`<li><span>${ing.name} x${cnt}</span> <span>${totalPrice} ₽</span></li>`);
-                    }
-                });
-
-                if (items.length === 0) {
-                    selectedListEl.innerHTML = '<li style="justify-content:center; color:#aaa;">Нет ингредиентов</li>';
-                } else {
-                    selectedListEl.innerHTML = items.join('');
+            // Добавление
+            function add(id) {
+                const ing = data.find(d => d.id === id);
+                if (counts[id] < 3) {
+                    counts[id]++;
+                    total += ing.price;
+                    refresh();
                 }
             }
 
-            // Сброс всего (очистить)
-            function resetAll() {
-                counts = { sauce:0, cheese:0, pepperoni:0, mushrooms:0, peppers:0 };
+            // Сброс
+            function reset() {
+                counts = { sauce: 0, cheese: 0, pepperoni: 0, mushrooms: 0, peppers: 0 };
                 total = 0;
-                refreshUI();
+                refresh();
             }
 
-            // Кнопка ЗАКАЗАТЬ: вывод в консоль объекта и alert
-            function handleOrder() {
-                const orderData = {
-                    items: [],
-                    total: total
-                };
-                INGREDIENTS.forEach(ing => {
-                    if (counts[ing.id] > 0) {
-                        orderData.items.push({
-                            name: ing.name,
-                            quantity: counts[ing.id],
-                            pricePerUnit: ing.price
-                        });
-                    }
-                });
-                console.log('Сформирован заказ:', orderData);
-                alert(`Заказ оформлен! Сумма: ${total} ₽\nСостав заказа смотри в консоли (F12).`);
-            }
+            // События
+            panel.addEventListener('click', e => {
+                if (e.target.classList.contains('add-btn')) {
+                    add(e.target.dataset.id);
+                }
+            });
 
-            // Инициализация
-            function init() {
-                renderIngredientPanel();
-                updateSelectedList();
-                totalSpan.textContent = '0 ₽';
-                renderPizzaToppings();
+            clearBtn.addEventListener('click', reset);
+            orderBtn.addEventListener('click', () => {
+                console.log({ items: counts, total });
+                alert(`Заказ на сумму ${total} ₽`);
+            });
 
-                // обработчики кнопок
-                orderBtn.addEventListener('click', handleOrder);
-                clearBtn.addEventListener('click', resetAll);
-            }
-
-            init();
+            // Старт
+            refresh();
         })();
     </script>
 </body>
