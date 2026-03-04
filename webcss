@@ -1,1 +1,343 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, Arial, sans-serif;
+}
 
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #fff;
+    color: #222;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Шапка */
+header {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #d35400;
+    text-decoration: none;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #333;
+}
+
+.nav-menu a:hover {
+    color: #d35400;
+}
+
+/* Hero */
+.hero {
+    text-align: center;
+    padding: 60px 0;
+    background: #f9f9f9;
+}
+
+.hero h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    color: #666;
+}
+
+/* Конструктор */
+.constructor-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 30px;
+    padding: 40px 0;
+}
+
+/* Пицца */
+.pizza-visual {
+    background: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid #eee;
+    margin-bottom: 30px;
+}
+
+.pizza-base {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    background: #f7d9aa;
+    border-radius: 50%;
+    border: 8px solid #e6b87e;
+    margin: 0 auto;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.pizza-base:hover {
+    transform: scale(1.02);
+}
+
+#toppingLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.topping {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pop 0.2s ease;
+}
+
+@keyframes pop {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.topping.sauce {
+    background: #b3470c;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    opacity: 0.3;
+}
+
+.topping.cheese { 
+    background: #ffd966; 
+    width: 35px; 
+    height: 35px; 
+    border: 2px solid #e6b422; 
+}
+
+.topping.pepperoni { 
+    background: #b33c3c; 
+    width: 32px; 
+    height: 32px; 
+    border: 2px solid #8b2c2c; 
+}
+
+.topping.mushrooms { 
+    background: #a17a5c; 
+    width: 28px; 
+    height: 28px; 
+    border: 2px solid #6b4f36; 
+}
+
+.topping.peppers { 
+    background: #5f9e5f; 
+    width: 30px; 
+    height: 30px; 
+    border: 2px solid #2d6b2d; 
+}
+
+/* Ингредиенты */
+.ingredients-panel {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.ingredient-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s;
+}
+
+.ingredient-item:hover {
+    background: #fafafa;
+}
+
+.ingredient-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.dot.sauce { background: #b3470c; opacity: 0.7; }
+.dot.cheese { background: #ffd966; border: 2px solid #e6b422; }
+.dot.pepperoni { background: #b33c3c; border: 2px solid #8b2c2c; }
+.dot.mushrooms { background: #a17a5c; border: 2px solid #6b4f36; }
+.dot.peppers { background: #5f9e5f; border: 2px solid #2d6b2d; }
+
+.price {
+    color: #d35400;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.counter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.counter span {
+    min-width: 20px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.add-btn {
+    background: #d35400;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.add-btn:hover:not(:disabled) {
+    background: #b3470c;
+}
+
+.add-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* Корзина */
+.cart {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 20px;
+    position: sticky;
+    top: 90px;
+}
+
+.cart h3 {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+#selectedList {
+    list-style: none;
+    margin-bottom: 20px;
+    min-height: 150px;
+}
+
+#selectedList li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 20px 0;
+    padding-top: 10px;
+    border-top: 2px solid #d35400;
+}
+
+.cart-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-order {
+    background: #d35400;
+    color: white;
+}
+
+.btn-order:hover {
+    background: #b3470c;
+}
+
+.btn-clear {
+    background: #e0e0e0;
+}
+
+.btn-clear:hover {
+    background: #d0d0d0;
+}
+
+/* Футер */
+footer {
+    background: #333;
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .constructor-grid {
+        grid-template-columns: 1fr;
+    }
+    .cart {
+        position: static;
+    }
+    .pizza-base {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (max-width: 320px) {
+    .nav-menu { gap: 15px; }
+    .hero h1 { font-size: 1.5rem; }
+    .pizza-base { width: 200px; height: 200px; }
+    .ingredient-item { flex-wrap: wrap; }
+}
